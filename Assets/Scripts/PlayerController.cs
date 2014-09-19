@@ -8,7 +8,7 @@ public class PlayerController : Photon.MonoBehaviour
 	private IdleChanger _Motion;
 
 	private Vector3 _Velocity;
-	private Vector3 _Position { get { return gameObject.transform.position + new Vector3(0, 0.75f, 0); } }
+	private Vector3 _Position { get { return gameObject.transform.position + new Vector3(0, 0.5f, 0); } }
 
 	public void SetCamera(Camera c)
 	{
@@ -26,7 +26,7 @@ public class PlayerController : Photon.MonoBehaviour
 				float distance = Vector3.Distance(_Position, _BackCamera.transform.position);
 				if (distance > 1.0f)
 				{
-					_BackCamera.transform.position = Vector3.Lerp(_BackCamera.transform.position, _Position, 0.01f);
+					_BackCamera.transform.position = Vector3.Lerp(_BackCamera.transform.position, _Position, 0.03f);
 				}
 				_BackCamera.transform.LookAt(gameObject.transform);
 			}
@@ -81,7 +81,7 @@ public class PlayerController : Photon.MonoBehaviour
 		if (GUI.Button(new Rect(0, size, size, size), "LEFT")) ActLeft();
 		if (GUI.Button(new Rect(size * 2, size, size, size), "RIGHT")) ActRight();
 		if (GUI.Button(new Rect(size, size * 2, size, size), "BACK")) ActBack();
-		if (GUI.Button(new Rect(size, size, size, size), "JUMP")) ActJump();
+		if (GUI.Button(new Rect(size, size, size, size), "ATK")) ActAttack();
 		_Velocity *= Dump;
 
 		if (Vector3.Dot(_Velocity, _Velocity) < 0.0001f) _Motion.Change(IdleChanger.Action.WAIT00);
@@ -109,7 +109,7 @@ public class PlayerController : Photon.MonoBehaviour
 	}
 
 	Quaternion _Rotation { get { return gameObject.transform.rotation; } set { gameObject.transform.rotation = value; } }
-	const float Impluse = 3.0f;
+	const float Impluse = 2.0f;
 	const float Dump = 0.95f;
 	void ActJump()
 	{
